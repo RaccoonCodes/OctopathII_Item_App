@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35806.99 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "OctopathII_Item_App", "OctopathII_Item_App.esproj", "{8339CF94-AB7E-EF66-9D8A-8342EA77C080}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8339CF94-AB7E-EF66-9D8A-8342EA77C080}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8339CF94-AB7E-EF66-9D8A-8342EA77C080}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8339CF94-AB7E-EF66-9D8A-8342EA77C080}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{8339CF94-AB7E-EF66-9D8A-8342EA77C080}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8339CF94-AB7E-EF66-9D8A-8342EA77C080}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8339CF94-AB7E-EF66-9D8A-8342EA77C080}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DCA86806-E3D1-4C04-8004-1804C544AD79}
+	EndGlobalSection
+EndGlobal
