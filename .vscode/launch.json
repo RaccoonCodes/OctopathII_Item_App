@@ -2,7 +2,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "type": "edge",
+      "type": "pwa-chrome",
       "request": "launch",
       "name": "localhost (Edge)",
       "url": "http://localhost:60534",
