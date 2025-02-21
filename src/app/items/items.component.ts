@@ -19,7 +19,7 @@ export class ItemsComponent implements OnInit {
   public items!: MatTableDataSource<Item>;
   public defaultSortColumn: string = "name";
   public defaultSortOrder: "asc" | "desc" = "asc";
-
+  
   defaultPageIndex: number = 0;
   deafaultPageSize: number = 15;
   defaultFilterColumn: string = "name";

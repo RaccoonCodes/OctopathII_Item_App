@@ -1,4 +1,43 @@
 /* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
+
+:root {
+  @include mat.table-overrides((
+    background-color: #161215, 
+    header-headline-color: #9fa7d2, 
+    row-item-label-text-color: white, 
+    row-item-outline-color: #e0e0e0, 
+    row-item-label-text-size: 14px, 
+    row-item-container-height: 48px, 
+  ));
+  @include mat.paginator-overrides((
+    container-text-color: orange,
+    container-background-color: #161215,
+    enabled-icon-color: orange,
+    disabled-icon-color:  gray,
+  ));
+  @include mat.form-field-overrides((
+    filled-container-color: #161215,
+    filled-input-text-color: orange
+  ));
+
+}
+.mat-mdc-select  {
+  color: orange !important; /* Change text color inside the form field */
+}
+
+
+.mat-sort-header-arrow {
+    color: #ff5733 !important; /* Default arrow color */
+  }
+  
+  .mat-sort-header-sorted .mat-sort-header-arrow {
+    color: #4caf50 !important; /* Active sorted arrow color */
+  }
+  
+  .mat-sort-header:hover {
+    background-color: rgba(174, 229, 22, 0.797); /* Hover effect */
+  }
 
 html, body { 
     height: 100%; 
@@ -10,3 +49,4 @@ body {
     color: white;
 }
 
+//work on filter by and value box

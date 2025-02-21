@@ -1,0 +1,59 @@
+<h1>Equipment List</h1>
+<p>List of all equipment in the game: </p>
+
+<p *ngIf="!equipment"><em>Now Loading....</em></p>
+
+<mat-form-field [hidden]="!equipment">
+  <mat-label>Filter by</mat-label>
+  <mat-select [(value)]="defaultSortColumn">
+    <mat-option value="name">Name</mat-option>
+    <mat-option value="equipment_Type">Item Type</mat-option>
+  </mat-select>
+</mat-form-field>
+
+<mat-form-field [hidden]="!equipment">
+    <input matInput #filter (keyup)="onFilterTextChanged(filter.value)" placeholder="Enter filter value...">
+  </mat-form-field>
+
+  <table mat-table [dataSource]="equipment" class="mat-elevation-z8" 
+  [hidden]="!equipment" matSort (matSortChange)="loadData()" 
+  [matSortActive]="defaultSortColumn" 
+  [matSortDirection]="defaultSortOrder">
+  
+  <!-- Name Column -->
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+    <td mat-cell *matCellDef="let equipment">{{ equipment.name }}</td>
+  </ng-container>
+
+  <!-- Buy Price Column -->
+  <ng-container matColumnDef="buy_Price">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Buy Price</th>
+    <td mat-cell *matCellDef="let equipment">{{ equipment.buy_Price }}</td>
+  </ng-container>
+
+  <!-- Sell Price Column -->
+  <ng-container matColumnDef="sell_Price">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Sell Price</th>
+    <td mat-cell *matCellDef="let equipment">{{ equipment.sell_Price }}</td>
+  </ng-container>
+
+  <!-- Item Type Column -->
+  <ng-container matColumnDef="equipment_Type">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Equipment Type</th>
+    <td mat-cell *matCellDef="let equipment">{{ equipment.equipment_Type }}</td>
+  </ng-container>
+
+  <!-- Header Row -->
+  <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
+
+  <!-- Data Row -->
+  <tr mat-row *matRowDef="let row; columns: displayColumns;"></tr>
+
+</table>
+
+<mat-paginator [hidden]="!equipment" 
+(page)="getInfo($event)" [pageSize]="15" 
+[pageSizeOptions]="[15, 30, 45]" 
+showFirstLastButtons>
+</mat-paginator>

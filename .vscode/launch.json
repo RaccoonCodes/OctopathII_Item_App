@@ -2,18 +2,26 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "type": "pwa-chrome",
+      "type": "msedge",
       "request": "launch",
-      "name": "localhost (Edge)",
-      "url": "http://localhost:60534",
+      "name": "localhost (msedge)",
+      "url": " http://localhost:60534/",
       "webRoot": "${workspaceFolder}"
     },
     {
       "type": "chrome",
       "request": "launch",
       "name": "localhost (Chrome)",
-      "url": "http://localhost:60534",
+      "url": " http://localhost:60534/",
       "webRoot": "${workspaceFolder}"
+    },
+    {
+      "name": "ng serve",
+      "type": "chrome",
+      "request": "launch",
+      "preLaunchTask": "npm: start",
+      "url": " http://localhost:60534/",
     }
+    
   ]
 }

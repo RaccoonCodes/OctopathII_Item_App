@@ -1,11 +1,24 @@
 <h1>Items List</h1>
 <p>List of all items in the game: </p>
 <p *ngIf="!items"><em>Now Loading....</em></p>
+
 <mat-form-field [hidden]="!items">
-  <input matInput #filter (keyup)="onFilterTextChanged(filter.value)" placeholder="Filter by name (or part of it)...">
+  <mat-label>Filter by</mat-label>
+  <mat-select [(value)]="defaultSortColumn">
+    <mat-option value="name">Name</mat-option>
+    <mat-option value="item_Type">Item Type</mat-option>
+  </mat-select>
 </mat-form-field>
 
-<table mat-table [dataSource]="items" class="mat-elevation-z8" [hidden]="!items" matSort (matSortChange)="loadData()" [matSortActive]="defaultSortColumn" [matSortDirection]="defaultSortOrder">
+
+<mat-form-field [hidden]="!items">
+  <input matInput #filter (keyup)="onFilterTextChanged(filter.value)" placeholder="Enter filter value...">
+</mat-form-field>
+
+<table mat-table [dataSource]="items" class="mat-elevation-z8" 
+[hidden]="!items" matSort (matSortChange)="loadData()" 
+[matSortActive]="defaultSortColumn" 
+[matSortDirection]="defaultSortOrder">
   
   <!-- Name Column -->
   <ng-container matColumnDef="name">

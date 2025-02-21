@@ -7,13 +7,15 @@ import { HomeComponent } from './home/home.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import {AngularMaterialModule} from '../angular-material.module';
-import { ItemsComponent } from './items/items.component'
+import { ItemsComponent } from './items/items.component';
+import { EquipmentComponent } from './equipment/equipment.component'
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     NavMenuComponent,
-    ItemsComponent
+    ItemsComponent,
+    EquipmentComponent
   ],
   imports: [
     BrowserModule,
