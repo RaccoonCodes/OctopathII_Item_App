@@ -8,19 +8,23 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import {AngularMaterialModule} from '../angular-material.module';
 import { ItemsComponent } from './items/items.component';
-import { EquipmentComponent } from './equipment/equipment.component'
+import { EquipmentComponent } from './equipment/equipment.component';
+import { ItemInfoComponent } from './items/item-info.component'
+import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     NavMenuComponent,
     ItemsComponent,
-    EquipmentComponent
+    EquipmentComponent,
+    ItemInfoComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    AngularMaterialModule
+    AngularMaterialModule,
+    ReactiveFormsModule
   ],
   providers: [
     provideAnimationsAsync(),

@@ -20,5 +20,12 @@ export class EquipmentService extends BaseService<Equipment> {
      return this.http.get<ApiResult<Equipment>>(url,{params:this.getQueryParams(params)});
 
    }
+   override getDataID(name: string): Observable<Equipment> {
+    throw new Error(`getDataID method is not implemented for ${name}`);
+   }
+   override putData(item: Equipment): Observable<Equipment> {
+    throw new Error(`putData method is not implemented for ${name}`);
+
+   }
 
 }

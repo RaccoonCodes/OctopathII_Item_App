@@ -26,7 +26,8 @@ export abstract class BaseService<T> {
   }
 
   abstract getData(params:QueryParams):Observable<ApiResult<T>>;
-  // abstract putData(item: T) : Observable<T>
+  abstract getDataID(name:string):Observable<T>;
+  abstract putData(item: T) : Observable<T>
   // abstract postData(item:T) : Observable<T>
 }
 
