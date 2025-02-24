@@ -19,7 +19,7 @@ export class ItemService extends BaseService<Item> {
   return this.http.get<ApiResult<Item>>(url, { params: this.getQueryParams(params) });
  }
  override getDataID(name: string): Observable<Item> {
-  const url = this.getUrl("api/Items/GetInfo/" + name);
+  const url = this.getUrl(`api/Items/GetInfo?name=${encodeURIComponent(name)}`);
   return this.http.get<Item>(url);
  }
  override putData(item: Item): Observable<Item> {

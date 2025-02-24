@@ -29,25 +29,27 @@ export class ItemInfoComponent extends BaseFormComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.fb.group({
-      description : ['', 
+      description: ['', [
         Validators.required,
         Validators.pattern(/^[a-zA-Z0-9]{2,}$/)
-      ],
-      buy_price :['',
+      ]],
+      buy_price: ['', [
         Validators.required,
         Validators.pattern(/^[0-9]{1,9}$/)
-      ],
-      sell_price:['',
+      ]],
+      sell_price: ['', [
         Validators.required,
         Validators.pattern(/^[0-9]{1,9}$/)
-      ],
-      item_type : ['',
+      ]],
+      item_type: ['', [
         Validators.required,
         Validators.pattern(/^[a-zA-Z]{2,}$/)
-      ]
+      ]]
     });
+  
     this.loadData();
   }
+  
 
   loadData(){
     let idParam = this.activedRoute.snapshot.paramMap.get('name');
@@ -66,7 +68,8 @@ export class ItemInfoComponent extends BaseFormComponent implements OnInit {
     this.title = "View - " + this.item.name;
 
     this.form.patchValue({
-      description:item.description,
+      name: item.name,
+      description: item.description,
       buy_price: item.buy_price,
       sell_price: item.sell_price,
       item_type: item.item_type

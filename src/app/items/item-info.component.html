@@ -1,1 +1,58 @@
-<p>item-info works!</p>
+<h1>{{title}}</h1>
+
+<form [formGroup]="form" *ngIf="isEditMode">
+<div class="form-group">
+    <label>Name</label>
+    <input id="name" formControlName="name" class="form-control" [readonly]="!isEditMode">
+</div>
+
+<div class="form-group">
+    <label for="description">Description</label>
+    <input id="description" formControlName="description" class="form-control">
+    <div *ngIf="form.controls['description'].touched && form.controls['description'].invalid">
+      <div *ngIf="form.controls['description'].errors?.['required']">Description is required.</div>
+      <div *ngIf="form.controls['description'].errors?.['pattern']">Description must contain at least 2 alphanumeric characters.</div>
+    </div>
+  </div>
+    <div class="form-group">
+      <label for="sell_price">Sell Price</label>
+      <input id="sell_price" formControlName="sell_price" class="form-control">
+      <div *ngIf="form.controls['sell_price'].touched && form.controls['sell_price'].invalid">
+        <div *ngIf="form.controls['sell_price'].errors?.['required']">Sell Price is required.</div>
+        <div *ngIf="form.controls['sell_price'].errors?.['pattern']">Sell Price must be a valid number (up to 9 digits).</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="item_type">Item Type</label>
+      <input id="item_type" formControlName="item_type" class="form-control">
+      <div *ngIf="form.controls['item_type'].touched && form.controls['item_type'].invalid">
+        <div *ngIf="form.controls['item_type'].errors?.['required']">Item Type is required.</div>
+        <div *ngIf="form.controls['item_type'].errors?.['pattern']">Item Type must contain at least 2 characters (letters only).</div>
+      </div>
+    </div>
+
+    <button type="button" (click)="onSubmit()" [disabled]="form.invalid" class="btn btn-primary">Save Changes</button>
+    <button type="button" (click)="onCancel()" class="btn btn-secondary">Cancel</button>
+  </form>
+
+  <!-- Display Item Details (View Mode) -->
+  <div *ngIf="!isEditMode">
+    <div class="item-detail">
+      <strong>Name:</strong> {{ item.name }}
+    </div>
+    <div class="item-detail">
+      <strong>Description:</strong> {{ item.description }}
+    </div>
+    <div class="item-detail">
+      <strong>Buy Price:</strong> {{ item.buy_price}}
+    </div>
+    <div class="item-detail">
+      <strong>Sell Price:</strong> {{ item.sell_price}}
+    </div>
+    <div class="item-detail">
+      <strong>Item Type:</strong> {{ item.item_type}}
+    </div>
+
+    <button type="button" (click)="toggleEditMode()" class="btn btn-primary">Edit</button>
+  </div>
