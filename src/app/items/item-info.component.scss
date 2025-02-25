@@ -6,7 +6,7 @@
     max-width: 400px;
     position: relative;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    will-change: transform; //;Optimizes rendering for the transform property
+    will-change: transform; //Optimizes rendering for the transform property
   
     &:hover {
       box-shadow: 0 15px 18px 15px rgba(156, 20, 190, 0.516); //Adds subtle shadow for depth 
@@ -36,4 +36,41 @@
       }
     }
   }
+
+  .flip-card {
+    perspective: 1000px;
+    width: 100%;
+    max-width: 400px;
+    margin: auto;
+    position: relative;
+  }
+  
+  .flip-card-inner {
+    width: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.6s ease-in-out;
+    position: relative;
+  }
+  
+  .flip-card.flipped .flip-card-inner {
+    transform: rotateY(180deg);
+  }
+  
+  .flip-card-front,
+  .flip-card-back {
+    position: absolute;
+    width: 100%;
+    backface-visibility: hidden;
+    transition: opacity 0.3s ease-in-out;
+  }
+  
+  .flip-card-back {
+    transform: rotateY(180deg);
+  }
+  
+  .hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+  
   

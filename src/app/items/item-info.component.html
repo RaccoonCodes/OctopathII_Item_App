@@ -1,75 +1,65 @@
-<h1>{{title}}</h1>
 
-<form [formGroup]="form" *ngIf="isEditMode">
+<h1>{{ title }}</h1>
+<div class="flip-card" [class.flipped]="isEditMode">
+  <div class="flip-card-inner">
 
-<div class="form-group">
-    <label for="name">Name</label>
-    <input id="name" formControlName="name" class="form-control" readonly>
-</div>
+    <!-- Front Side (View Mode) -->
+    <mat-card class="flip-card-front item-card" [class.hidden]="isEditMode" (mousemove)="onMouseMove($event)" (mouseleave)="onMouseLeave()">
+      <mat-card-title class="card-title">{{ item.name }}</mat-card-title>
+      <mat-card-content class="card-content">
+        <div class="item-info">
+          <p><strong>Description:</strong> {{ item.description }}</p>
+          <p><strong>Buy Price:</strong> {{ item.buy_Price }} Leaf</p>
+          <p><strong>Sell Price:</strong> {{ item.sell_Price }} Leaf</p>
+          <p><strong>Item Type:</strong> {{ item.item_Type }}</p>
+        </div>
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <button mat-button color="primary" (click)="toggleEditMode()">Edit</button>
+      </mat-card-actions>
+    </mat-card>
 
-<div class="form-group">
-    <label for="description">Description</label>
-    <input id="description" formControlName="description" class="form-control">
-    <div *ngIf="form.controls['description'].touched && form.controls['description'].invalid">
-      <div *ngIf="form.controls['description'].errors?.['required']">Description is required.</div>
-      <div *ngIf="form.controls['description'].errors?.['pattern']">Description must contain at least 2 alphanumeric characters.</div>
-    </div>
+    <!-- Back Side (Edit Mode) -->
+    <form [formGroup]="form" class="flip-card-back item-card" [class.hidden]="!isEditMode">
+      <mat-card-title class="card-title">Edit Item</mat-card-title>
+      <mat-card-content class="card-content">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input id="name" formControlName="name" class="form-control" readonly>
+        </div>
+
+        <div class="form-group">
+          <label for="description">Description</label>
+          <input id="description" formControlName="description" class="form-control">
+          <div *ngIf="form.controls['description'].touched && form.controls['description'].invalid">
+            <div *ngIf="form.controls['description'].errors?.['required']">Description is required.</div>
+            <div *ngIf="form.controls['description'].errors?.['pattern']">Description must contain at least 2 alphanumeric characters.</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="sell_price">Sell Price</label>
+          <input id="sell_price" formControlName="sell_price" class="form-control">
+          <div *ngIf="form.controls['sell_price'].touched && form.controls['sell_price'].invalid">
+            <div *ngIf="form.controls['sell_price'].errors?.['required']">Sell Price is required.</div>
+            <div *ngIf="form.controls['sell_price'].errors?.['pattern']">Sell Price must be a valid number (up to 9 digits).</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="item_type">Item Type</label>
+          <input id="item_type" formControlName="item_type" class="form-control">
+          <div *ngIf="form.controls['item_type'].touched && form.controls['item_type'].invalid">
+            <div *ngIf="form.controls['item_type'].errors?.['required']">Item Type is required.</div>
+            <div *ngIf="form.controls['item_type'].errors?.['pattern']">Item Type must contain at least 2 characters (letters only).</div>
+          </div>
+        </div>
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <button type="button" (click)="onSubmit()" [disabled]="form.invalid" class="btn btn-primary">Save Changes</button>
+        <button type="button" (click)="toggleEditMode()" class="btn btn-secondary">Cancel</button>
+      </mat-card-actions>
+    </form>
+
   </div>
-    <div class="form-group">
-      <label for="sell_price">Sell Price</label>
-      <input id="sell_price" formControlName="sell_price" class="form-control">
-      <div *ngIf="form.controls['sell_price'].touched && form.controls['sell_price'].invalid">
-        <div *ngIf="form.controls['sell_price'].errors?.['required']">Sell Price is required.</div>
-        <div *ngIf="form.controls['sell_price'].errors?.['pattern']">Sell Price must be a valid number (up to 9 digits).</div>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label for="item_type">Item Type</label>
-      <input id="item_type" formControlName="item_type" class="form-control">
-      <div *ngIf="form.controls['item_type'].touched && form.controls['item_type'].invalid">
-        <div *ngIf="form.controls['item_type'].errors?.['required']">Item Type is required.</div>
-        <div *ngIf="form.controls['item_type'].errors?.['pattern']">Item Type must contain at least 2 characters (letters only).</div>
-      </div>
-    </div>
-
-    <button type="button" (click)="onSubmit()" [disabled]="form.invalid" class="btn btn-primary">Save Changes</button>
-    <button type="button" (click)="onCancel()" class="btn btn-secondary">Cancel</button>
-  </form>
-
-  <!-- Display Item Details (View Mode) -->
-  <!-- <div *ngIf="!isEditMode && item">
-    <div class="item-detail">
-      <strong>Name:</strong> {{ item.name }}
-    </div>
-    <div class="item-detail">
-      <strong>Description:</strong> {{ item.description }}
-    </div>
-    <div class="item-detail">
-      <strong>Buy Price:</strong> {{ item.buy_Price}}
-    </div>
-    <div class="item-detail">
-      <strong>Sell Price:</strong> {{ item.sell_Price}}
-    </div>
-    <div class="item-detail">
-      <strong>Item Type:</strong> {{ item.item_Type}}
-    </div>
-
-    <button type="button" (click)="toggleEditMode()" class="btn btn-primary">Edit</button>
-  </div> -->
-
-  <mat-card *ngIf="!isEditMode && item" class="item-card" (mousemove) = "onMouseMove($event)" (mouseleave)="onMouseLeave()">
-    <mat-card-title class="card-title">{{ item.name }}</mat-card-title>
-    <mat-card-content class="card-content">
-      <div class="item-info">
-        <p><strong>Description:</strong> {{ item.description }}</p>
-        <p><strong>Buy Price:</strong> {{ item.buy_Price }} Leaf</p>
-        <p><strong>Sell Price:</strong> {{ item.sell_Price }} Leaf</p>
-        <p><strong>Item Type:</strong> {{ item.item_Type }}</p>
-      </div>
-    </mat-card-content>
-    <mat-card-actions align="end">
-      <button mat-button color="primary" (click)="toggleEditMode()">Edit</button>
-    </mat-card-actions>
-  </mat-card>
-  
+</div>

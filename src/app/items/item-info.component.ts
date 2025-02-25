@@ -118,11 +118,21 @@ export class ItemInfoComponent extends BaseFormComponent implements OnInit {
     card.style.transform = 'rotateX(0deg) rotateY(0deg)';
   }
 
-
+  //animation complete, work on display boxes, bug in description property 
+  //and test put function 
 
   toggleEditMode():void{
-    this.isEditMode = !this.isEditMode;
-    this.loadData(); //Reload data and switch modes
+    if (this.isEditMode) {
+      // Delay hiding the form until animation completes
+      setTimeout(() => {
+        this.isEditMode = false;
+        this.title = "View - " + this.item.name;
+      }, 100);
+    } else {
+      this.isEditMode = true;
+      this.title = "Edit - " + this.item.name;
+    }
+    this.loadData();
   }
 
   onCancel():void{
