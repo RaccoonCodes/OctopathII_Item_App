@@ -1,0 +1,39 @@
+.item-card {
+    background: #3c042e;
+    margin: auto;
+    padding: 15px;
+    border-radius: 20px;
+    max-width: 400px;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    will-change: transform; //;Optimizes rendering for the transform property
+  
+    &:hover {
+      box-shadow: 0 15px 18px 15px rgba(156, 20, 190, 0.516); //Adds subtle shadow for depth 
+    }
+  
+    .card-title {
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+  
+    .card-content {
+      display: flex;
+      justify-content: flex-start;
+    }
+  
+    .item-info {
+      text-align: left;
+      width: 100%;
+      padding: 8px 0;
+  
+      p {
+        margin-bottom: 13px;
+      }
+      p:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+  

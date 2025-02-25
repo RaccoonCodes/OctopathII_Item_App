@@ -6,11 +6,12 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import {AngularMaterialModule} from '../angular-material.module';
+import { AngularMaterialModule } from '../angular-material.module';
 import { ItemsComponent } from './items/items.component';
 import { EquipmentComponent } from './equipment/equipment.component';
 import { ItemInfoComponent } from './items/item-info.component'
 import { ReactiveFormsModule } from '@angular/forms';
+import {MatCardModule} from '@angular/material/card'
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,7 +25,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     BrowserModule,
     AppRoutingModule,
     AngularMaterialModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatCardModule
   ],
   providers: [
     provideAnimationsAsync(),

@@ -1,9 +1,10 @@
 <h1>{{title}}</h1>
 
 <form [formGroup]="form" *ngIf="isEditMode">
+
 <div class="form-group">
-    <label>Name</label>
-    <input id="name" formControlName="name" class="form-control" [readonly]="!isEditMode">
+    <label for="name">Name</label>
+    <input id="name" formControlName="name" class="form-control" readonly>
 </div>
 
 <div class="form-group">
@@ -37,7 +38,7 @@
   </form>
 
   <!-- Display Item Details (View Mode) -->
-  <div *ngIf="!isEditMode">
+  <!-- <div *ngIf="!isEditMode && item">
     <div class="item-detail">
       <strong>Name:</strong> {{ item.name }}
     </div>
@@ -45,14 +46,30 @@
       <strong>Description:</strong> {{ item.description }}
     </div>
     <div class="item-detail">
-      <strong>Buy Price:</strong> {{ item.buy_price}}
+      <strong>Buy Price:</strong> {{ item.buy_Price}}
     </div>
     <div class="item-detail">
-      <strong>Sell Price:</strong> {{ item.sell_price}}
+      <strong>Sell Price:</strong> {{ item.sell_Price}}
     </div>
     <div class="item-detail">
-      <strong>Item Type:</strong> {{ item.item_type}}
+      <strong>Item Type:</strong> {{ item.item_Type}}
     </div>
 
     <button type="button" (click)="toggleEditMode()" class="btn btn-primary">Edit</button>
-  </div>
+  </div> -->
+
+  <mat-card *ngIf="!isEditMode && item" class="item-card" (mousemove) = "onMouseMove($event)" (mouseleave)="onMouseLeave()">
+    <mat-card-title class="card-title">{{ item.name }}</mat-card-title>
+    <mat-card-content class="card-content">
+      <div class="item-info">
+        <p><strong>Description:</strong> {{ item.description }}</p>
+        <p><strong>Buy Price:</strong> {{ item.buy_Price }} Leaf</p>
+        <p><strong>Sell Price:</strong> {{ item.sell_Price }} Leaf</p>
+        <p><strong>Item Type:</strong> {{ item.item_Type }}</p>
+      </div>
+    </mat-card-content>
+    <mat-card-actions align="end">
+      <button mat-button color="primary" (click)="toggleEditMode()">Edit</button>
+    </mat-card-actions>
+  </mat-card>
+  
