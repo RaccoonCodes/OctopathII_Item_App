@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ItemService } from './item.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BaseFormComponent } from '../base-form.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-item-info',
@@ -21,7 +22,7 @@ export class ItemInfoComponent extends BaseFormComponent implements OnInit {
 
   constructor(
     private activedRoute:ActivatedRoute, private itemService:ItemService,
-    private fb:FormBuilder
+    private fb:FormBuilder,private snackBar: MatSnackBar
   )
   {
     super()
@@ -29,10 +30,12 @@ export class ItemInfoComponent extends BaseFormComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.fb.group({
-      name:['',Validators.required],
+      name:['',
+        Validators.required
+      ],
       description: ['', [
         Validators.required,
-        Validators.pattern(/^[a-zA-Z0-9]{2,}$/)
+        Validators.pattern(/^(?=.*[a-zA-Z0-9].*[a-zA-Z0-9])[a-zA-Z0-9\s.,!?'"()-]{2,}$/)
       ]],
       buy_price: ['', [
         Validators.required,
@@ -58,13 +61,8 @@ export class ItemInfoComponent extends BaseFormComponent implements OnInit {
 
     this.itemService.getDataID(this.itemID).subscribe(item =>{
         this.item = item;
-      //  console.log('Item name: ', item.name);
-      //  console.log('Item price: ', item.buy_Price);
-      //  console.log('Item sell: ', item.sell_Price);
-      //  console.log('Item Type: ', item.item_Type);
-      this.isEditMode ? this.initializeEditMode(item) 
-      : this.initializeViewMode(item);
-
+        this.isEditMode ? this.initializeEditMode(item) 
+        : this.initializeViewMode(item);
     });
   }
 
@@ -118,9 +116,6 @@ export class ItemInfoComponent extends BaseFormComponent implements OnInit {
     card.style.transform = 'rotateX(0deg) rotateY(0deg)';
   }
 
-  //animation complete, work on display boxes, bug in description property 
-  //and test put function 
-
   toggleEditMode():void{
     if (this.isEditMode) {
       // Delay hiding the form until animation completes
@@ -139,6 +134,7 @@ export class ItemInfoComponent extends BaseFormComponent implements OnInit {
     this.isEditMode = false;
     this.loadData();
   }
+  
   onSubmit(): void {
     if (this.form.valid) {
       const updatedItem: Item = { ...this.item, ...this.form.value };
@@ -146,6 +142,10 @@ export class ItemInfoComponent extends BaseFormComponent implements OnInit {
       this.itemService.putData(updatedItem).subscribe({
         next: () => {
           this.isEditMode = false;
+          this.snackBar.open('Changes saved successfully!', 'Close', {
+            duration: 3000, // Snackbar disappears after 3 seconds
+            panelClass: ['snackbar-success'] 
+          });
           this.loadData(); 
         },
         error: (error) => {

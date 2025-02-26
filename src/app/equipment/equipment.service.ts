@@ -18,14 +18,14 @@ export class EquipmentService extends BaseService<Equipment> {
    override getData(params: QueryParams): Observable<ApiResult<Equipment>> {
      var url = this.getUrl("api/Equipment/GetEquipment");     
      return this.http.get<ApiResult<Equipment>>(url,{params:this.getQueryParams(params)});
-
    }
    override getDataID(name: string): Observable<Equipment> {
-    throw new Error(`getDataID method is not implemented for ${name}`);
-   }
-   override putData(item: Equipment): Observable<Equipment> {
-    throw new Error(`putData method is not implemented for ${name}`);
-
+    var url = this.getUrl(`api/Equipment/GetInfo?name=${encodeURIComponent(name)}`); 
+    return this.http.get<Equipment>(url);
+  }
+   override putData(equipment: Equipment): Observable<Equipment> {
+    const url = this.getUrl("/api/Equipment/PutEquipment");
+    return this.http.put<Equipment>(url, equipment);
    }
 
 }

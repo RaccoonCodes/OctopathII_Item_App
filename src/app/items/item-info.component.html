@@ -4,7 +4,7 @@
   <div class="flip-card-inner">
 
     <!-- Front Side (View Mode) -->
-    <mat-card class="flip-card-front item-card" [class.hidden]="isEditMode" (mousemove)="onMouseMove($event)" (mouseleave)="onMouseLeave()">
+    <mat-card *ngIf="item" class="flip-card-front item-card" [class.hidden]="isEditMode" (mousemove)="onMouseMove($event)" (mouseleave)="onMouseLeave()">
       <mat-card-title class="card-title">{{ item.name }}</mat-card-title>
       <mat-card-content class="card-content">
         <div class="item-info">
@@ -20,7 +20,7 @@
     </mat-card>
 
     <!-- Back Side (Edit Mode) -->
-    <form [formGroup]="form" class="flip-card-back item-card" [class.hidden]="!isEditMode">
+    <form  [formGroup]="form" class="flip-card-back item-card" [class.hidden]="!isEditMode">
       <mat-card-title class="card-title">Edit Item</mat-card-title>
       <mat-card-content class="card-content">
         <div class="form-group">
@@ -56,8 +56,13 @@
         </div>
       </mat-card-content>
       <mat-card-actions align="end">
-        <button type="button" (click)="onSubmit()" [disabled]="form.invalid" class="btn btn-primary">Save Changes</button>
-        <button type="button" (click)="toggleEditMode()" class="btn btn-secondary">Cancel</button>
+        <button mat-raised-button class="custom-save" (click)="onSubmit()" [disabled]="form.invalid">
+          Save Changes
+        </button>
+        <button mat-raised-button class="custom-cancel" (click)="toggleEditMode()">
+          Cancel
+        </button>
+        
       </mat-card-actions>
     </form>
 

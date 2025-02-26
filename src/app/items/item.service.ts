@@ -23,7 +23,7 @@ export class ItemService extends BaseService<Item> {
   return this.http.get<Item>(url);
  }
  override putData(item: Item): Observable<Item> {
-  const url = this.getUrl("api/Items/GetInfo");
+  const url = this.getUrl("api/Items/PutItem");
   return this.http.put<Item>(url, item);
  }
 

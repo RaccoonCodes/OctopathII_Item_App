@@ -11,7 +11,9 @@ import { ItemsComponent } from './items/items.component';
 import { EquipmentComponent } from './equipment/equipment.component';
 import { ItemInfoComponent } from './items/item-info.component'
 import { ReactiveFormsModule } from '@angular/forms';
-import {MatCardModule} from '@angular/material/card'
+import { MatCardModule } from '@angular/material/card';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { EquipmentInfoComponent } from './equipment/equipment-info.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -19,14 +21,16 @@ import {MatCardModule} from '@angular/material/card'
     NavMenuComponent,
     ItemsComponent,
     EquipmentComponent,
-    ItemInfoComponent
+    ItemInfoComponent,
+    EquipmentInfoComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     AngularMaterialModule,
     ReactiveFormsModule,
-    MatCardModule
+    MatCardModule,
+    MatSnackBarModule
   ],
   providers: [
     provideAnimationsAsync(),
