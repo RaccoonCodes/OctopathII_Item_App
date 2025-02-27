@@ -109,4 +109,113 @@ getErrors(
 ```
 This extracts and formats validation errors for a form control and it allows me to customise error messages. When it recieves errors from the form, it loops through all the errors associated with the form control. It assigns default messages for required and pattern errors. If it catches other errors, it also provides a fallback message for other validation errors. Then it returns an array of formatted error messages.
 
+# Item
+This interface class is a data model for object type Item that contains item name, description, pricing, and type,
+```typescript
+export interface Item{
+    name:string;
+    description:string;
+    buy_Price:number;
+    sell_Price:number;
+    item_Type:string;
+}
+```
+This is what information is used across the application when dealing with Item types. 
+
+# Item Service
+```typescript
+export class ItemService extends BaseService<Item> {
+
+  constructor(http: HttpClient) {
+    super(http);
+  }
+ override getData(params: QueryParams): Observable<ApiResult<Item>> {
+  const url = this.getUrl("api/Items/GetItems");
+  return this.http.get<ApiResult<Item>>(url, { params: this.getQueryParams(params) });
+ }
+ override getDataID(name: string): Observable<Item> {
+  const url = this.getUrl(`api/Items/GetInfo?name=${encodeURIComponent(name)}`);
+  return this.http.get<Item>(url);
+ }
+ override putData(item: Item): Observable<Item> {
+  const url = this.getUrl("api/Items/PutItem");
+  return this.http.put<Item>(url, item);
+ }
+```
+The `ItemService` class extends `BaseService<Item>` and provides API interaction methods for retrieving and updating Item data. This service class is used in conjuction with `items.component`.
+
+# ItemsComponent 
+This component is responsible for displaying a paginated, sortable, and filterable list of `Item` objects using Angular Material's table `MatTableDataSource`. It interacts with the `ItemService` to fetch data from an API, handles user input for filtering, and updates the table dynamically.
+```typescript
+export class ItemsComponent implements OnInit {
+  public displayColumns: string[] = ['name','buy_Price',`sell_Price`,'item_Type'];
+  public items!: MatTableDataSource<Item>;
+  public defaultSortColumn: string = "name";
+  public defaultSortOrder: "asc" | "desc" = "asc";
+  
+  defaultPageIndex: number = 0;
+  deafaultPageSize: number = 15;
+  defaultFilterColumn: string = "name";
+  filterQuery?:string;
+
+  @ViewChild(MatPaginator) paginator!:MatPaginator;
+  @ViewChild(MatSort) sort!:MatSort;
+  
+  filterTextChanged:Subject<string> = new Subject<string>();
+
+  constructor(private itemService: ItemService){}
+
+  ngOnInit() {
+    this.loadData();
+  }
+
+  onFilterTextChanged(filterText: string){
+    if (!this.filterTextChanged.observed) {
+      this.filterTextChanged
+        .pipe(debounceTime(900), distinctUntilChanged())
+        .subscribe(query => {
+          this.loadData(query);
+        });
+    }
+    this.filterTextChanged.next(filterText);
+  }
+
+  loadData(query?:string){
+    var pageEvent = new PageEvent();
+    pageEvent.pageIndex = this.defaultPageIndex;
+    pageEvent.pageSize = this.deafaultPageSize;
+    this.filterQuery = query;
+    this.getInfo(pageEvent);
+  }
+  getInfo(event: PageEvent){
+    var sortColumn = (this.sort) 
+    ? this.sort.active : this.defaultSortColumn;
+    var sortOrder = (this.sort) 
+    ? this.sort.direction : this.defaultSortOrder;
+    var filterColumn = (this.filterQuery)
+    ? this.defaultFilterColumn : null;
+    var filterQuery = (this.filterQuery)
+    ? this.filterQuery : null;
+
+    const queryParams: QueryParams = {
+      pageIndex: event.pageIndex,
+      pageSize: event.pageSize,
+      sortColumn: sortColumn,
+      sortOrder: sortOrder,
+      filterColumn: filterColumn,
+      filterQuery: filterQuery
+    };
+    this.itemService.getData(queryParams).subscribe({
+        next: (result)=>
+          {
+            this.paginator.length = result.recordCount;
+            this.paginator.pageIndex = result.pageIndex;
+            this.paginator.pageSize = result.pageSize;
+            this.items = new MatTableDataSource<Item>(result.data);
+          },
+          error: (error) => console.error(error)
+        });
+      }
+    }
+```
 
