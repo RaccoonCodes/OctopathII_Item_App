@@ -8,6 +8,8 @@ This part of the project is the front-end of the main project "Octopath II Items
 **Note:**
 Once this project is running, open your browser and navigate to `http://localhost:4200/`
 
+The information about `Item` and `Equipment` is obtain via CSV which can be access or download on the README on `OctopathII_Items-API`
+
 # Packages
 The all packages used in this project is found in the `package.json` files. The Dependency list is long so I won't show them here.
 
@@ -218,4 +220,172 @@ export class ItemsComponent implements OnInit {
       }
     }
 ```
+As mentioned before, this component handles data, pagination, sorting, filtering, and API interaction which all are used to set up information for the HTML aspect of it. A Debounce time is also implemented to reduce redundant API calls when users type quickly. This is applied to filter section in the UI/HTML part.
+
+# Item Info Component
+This component allows users to view and edit details of a specific item. 
+```typescript
+export class ItemInfoComponent extends BaseFormComponent implements OnInit {
+  item!:Item;
+  title?:string;
+  itemForm!: FormGroup;
+  itemID!:string;
+  isEditMode:boolean = false;
+
+
+  constructor(
+    private activedRoute:ActivatedRoute, private itemService:ItemService,
+    private fb:FormBuilder,private snackBar: MatSnackBar
+  )
+  {
+    super()
+  }
+
+  ngOnInit() {
+    this.form = this.fb.group({
+      name:['',
+        Validators.required
+      ],
+      description: ['', [
+        Validators.required,
+        Validators.pattern(/^(?=.*[a-zA-Z0-9].*[a-zA-Z0-9])[a-zA-Z0-9\s.,!?'"()-]{2,}$/)
+      ]],
+      buy_price: ['', [
+        Validators.required,
+        Validators.pattern(/^[0-9]{1,9}$/)
+      ]],
+      sell_price: ['', [
+        Validators.required,
+        Validators.pattern(/^[0-9]{1,9}$/)
+      ]],
+      item_type: ['', [
+        Validators.required,
+        Validators.pattern(/^[a-zA-Z]{2,}$/)
+      ]]
+    });
+  
+    this.loadData();
+  }
+  
+
+  loadData(){
+    let idParam = this.activedRoute.snapshot.paramMap.get("name");
+    this.itemID = idParam ?? '';
+
+    this.itemService.getDataID(this.itemID).subscribe(item =>{
+        this.item = item;
+        this.isEditMode ? this.initializeForm(item,true) 
+        : this.initializeForm(item,false);
+    });
+  }
+  initializeForm(item: Item, editMode: boolean): void {
+    this.item = item;
+    this.title = (editMode ? "Edit" : "View") + " - " + item.name;
+    this.form.patchValue({
+      name: item.name,
+      description: item.description,
+      buy_price: item.buy_Price,
+      sell_price: item.sell_Price,
+      item_type: item.item_Type
+    });
+    editMode ? this.form.enable() : this.form.disable();
+  }
+
+  onMouseMove(event: MouseEvent) {
+    const card = event.currentTarget as HTMLElement;
+
+    const { left, top, width, height } = card.getBoundingClientRect();
+    const centerX = left + width / 2;
+    const centerY = top + height / 2;
+
+    const deltaX = event.clientX - centerX;
+    const deltaY = event.clientY - centerY;
+
+    const rotateX = (deltaY / height) * 28; 
+    const rotateY = (deltaX / width) * -28; 
+
+    card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+  }
+
+  onMouseLeave() {
+    const card = document.querySelector('.item-card') as HTMLElement;
+    card.style.transform = 'rotateX(0deg) rotateY(0deg)';
+  }
+
+  toggleEditMode():void{
+    if (this.isEditMode) {
+      // Delay hiding the form until animation completes
+      setTimeout(() => {
+        this.isEditMode = false;
+        this.title = "View - " + this.item.name;
+      }, 100);
+    } else {
+      this.isEditMode = true;
+      this.title = "Edit - " + this.item.name;
+    }
+    this.isEditMode ? this.form.enable() : this.form.disable();
+  }
+
+  onCancel():void{
+    this.isEditMode = false;
+    this.loadData();
+  }
+  
+  onSubmit(): void {
+    if (this.form.valid) {
+      const updatedItem: Item = { ...this.item, ...this.form.value };
+  
+      this.itemService.putData(updatedItem).subscribe({
+        next: () => {
+          this.isEditMode = false;
+          this.snackBar.open('Changes saved successfully!', 'Close', {
+            duration: 3000, // Snackbar disappears after 3 seconds
+            panelClass: ['snackbar-success'] 
+          });
+          this.loadData(); 
+        },
+        error: (error) => {
+          console.error('Error updating item', error);
+        }
+      });
+    } else {
+      console.log('Form is not valid!');
+    }
+  }
+```
+
+Similar to `items.component` This handles the information that is being used in the HTML. In the UI, it uses a card form view information of the Item and, at the same time, it handles the edit section when updating information of the item. When the update is complete, it changes to view mode and creates a little notification bar notifying the user that the changes was successful. 
+
+
+# Equipment
+To shorten the README Section, I won't go too much in detail for equipment, has it almost follow similar structure as Item. Instead of using `Item` as its data type, it uses `equipment` which contains the following:
+```typescript
+export interface Equipment{
+    name: string;
+    max_Hp: number;
+    max_SP: number;
+    physical_Atk: number;
+    elemental_Atk: number;
+    physical_Def: number;
+    elemental_Def: number;
+    accuracy: number;
+    speed: number;
+    critical: number;
+    evasion: number;
+    effect: string;
+    buy_Price: number;
+    sell_Price: number;
+    equipment_Type: string;
+}
+```
+
+As shown above, the item has fewer properties to display while the equipment has more properties to show in greater detail what each equipment does in the game. 
+
+# Conclusion
+
+This project is the Front-end section for Octopath Traveller II Items. The Back-end is made with .NET 8 which can be downloaded in my GitHub repertoire. This is one of the many Angular/.NET project I have created. In terms of update, there probably won't be any in the future for this particular project, however I will continue to work on other project.
+
+**Note:** There will more projects that I will work on. Some with a mix of Angular 19/.NET 8 and some with Full on .NET MVC or .NET Razor Pages. Last update on this project is on 2/26/2025
+
+Have a Nice Day!
 
