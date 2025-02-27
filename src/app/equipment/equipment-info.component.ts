@@ -62,10 +62,9 @@ export class EquipmentInfoComponent extends BaseFormComponent implements OnInit 
         evasion:['', [
           Validators.required,Validators.pattern(/^[0-9]{1,9}$/)
         ]],
-        effect: ['', [
-          Validators.required,
-          Validators.pattern(/^(?=.*[a-zA-Z0-9].*[a-zA-Z0-9])[a-zA-Z0-9\s.,!?'"()-]{2,}$/)
+        effect: ['', [Validators.required, Validators.pattern(/.*[a-zA-Z0-9]+.*/)
         ]],
+
         buy_Price:['', [
           Validators.required,Validators.pattern(/^[0-9]{1,9}$/)
         ]],
@@ -75,7 +74,7 @@ export class EquipmentInfoComponent extends BaseFormComponent implements OnInit 
         ]],
         equipment_Type:['', [
           Validators.required,
-          Validators.pattern(/^(?=.*[a-zA-Z0-9].*[a-zA-Z0-9])[a-zA-Z0-9\s.,!?'"()-]{2,}$/)
+          Validators.pattern(/^(?=.*[a-zA-Z0-9].*[a-zA-Z0-9])[a-zA-Z0-9\s.,!?'"()-]{1,}$/)
         ]]
       });
       this.loadData();
@@ -87,25 +86,17 @@ export class EquipmentInfoComponent extends BaseFormComponent implements OnInit 
 
       this.equipmentservice.getDataID(this.equipmentID).subscribe(equipment =>{
         this.equipment = equipment;
-        this.isEditMode ? this.initializeEditMode(equipment) 
-        : this.initializeViewMode(equipment);
+        this.isEditMode ? this.initializeForm(equipment,true) 
+        : this.initializeForm(equipment,false);
     });
   }
+  initializeForm(equipment: Equipment, editMode: boolean){
+    this.equipment = equipment;
+    this.title = (editMode ? "Edit" : "View") + " - " + equipment.name;
+    this.setFormValues(equipment);
+    editMode ? this.form.enable() : this.form.disable();
+  }
 
-  initializeViewMode(equipment: Equipment) {
-    this.equipment = equipment;
-    this.title = "View: " + this.equipment.name;
-    this.setFormValues(equipment);
-    this.form.disable();
-  }
-  
-  initializeEditMode(equipment: Equipment): void {
-    this.equipment = equipment;
-    this.title = "Edit: " + this.equipment.name;
-    this.setFormValues(equipment);
-    this.form.enable();
-  }
-  
   private setFormValues(equipment: Equipment): void {
     this.form.patchValue({
       name: equipment.name,
@@ -159,7 +150,7 @@ export class EquipmentInfoComponent extends BaseFormComponent implements OnInit 
       this.isEditMode = true;
       this.title = "Edit - " + this.equipment.name;
     }
-    this.loadData();
+    this.isEditMode ? this.form.enable() : this.form.disable();
   }
 
   onCancel():void{

@@ -61,15 +61,13 @@ export class ItemInfoComponent extends BaseFormComponent implements OnInit {
 
     this.itemService.getDataID(this.itemID).subscribe(item =>{
         this.item = item;
-        this.isEditMode ? this.initializeEditMode(item) 
-        : this.initializeViewMode(item);
+        this.isEditMode ? this.initializeForm(item,true) 
+        : this.initializeForm(item,false);
     });
   }
-
-  initializeViewMode(item:Item):void{
+  initializeForm(item: Item, editMode: boolean): void {
     this.item = item;
-    this.title = "View - " + this.item.name;
-
+    this.title = (editMode ? "Edit" : "View") + " - " + item.name;
     this.form.patchValue({
       name: item.name,
       description: item.description,
@@ -77,22 +75,7 @@ export class ItemInfoComponent extends BaseFormComponent implements OnInit {
       sell_price: item.sell_Price,
       item_type: item.item_Type
     });
-    this.form.disable();
-  }
-
-  initializeEditMode(item:Item):void{
-    this.item = item;
-    this.title = "Edit - " + this.item.name;
-
-    this.form.patchValue({
-      name: item.name,
-      description: item.description,
-      buy_price: item.buy_Price,
-      sell_price: item.sell_Price,
-      item_type: item.item_Type
-    });
-
-    this.form.enable();
+    editMode ? this.form.enable() : this.form.disable();
   }
 
   onMouseMove(event: MouseEvent) {
@@ -127,7 +110,7 @@ export class ItemInfoComponent extends BaseFormComponent implements OnInit {
       this.isEditMode = true;
       this.title = "Edit - " + this.item.name;
     }
-    this.loadData();
+    this.isEditMode ? this.form.enable() : this.form.disable();
   }
 
   onCancel():void{

@@ -1,0 +1,125 @@
+.item-card {
+    background: #3c042e;
+    margin: auto;
+    padding: 15px;
+    border-radius: 20px;
+    max-width: 400px;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    will-change: transform; // Optimizes rendering for the transform property
+  
+    &:hover {
+      // Adds subtle shadow for depth 
+      box-shadow: 0 15px 18px 15px rgba(156, 20, 190, 0.516); 
+    }
+  
+    .card-title {
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+  
+    .card-content {
+      display: flex;
+      flex-direction: column; // Ensures stacked labels and inputs
+      width: 100%;
+    }
+  
+    .item-info {
+      text-align: left;
+      width: 100%;
+      padding: 8px 0;
+  
+      p {
+        margin-bottom: 13px;
+      }
+      p:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+  
+  .flip-card {
+    perspective: 1000px;
+    width: 100%;
+    max-width: 400px;
+    margin: auto;
+    position: relative;
+  }
+  
+  .flip-card-inner {
+    width: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.6s ease-in-out;
+    position: relative;
+  }
+  
+  .flip-card.flipped .flip-card-inner {
+    transform: rotateY(180deg);
+  }
+  
+  .flip-card-front,
+  .flip-card-back {
+    position: absolute;
+    width: 100%;
+    backface-visibility: hidden;
+    transition: opacity 0.3s ease-in-out;
+  }
+  
+  .flip-card-back {
+    transform: rotateY(180deg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column; 
+    width: 100%;
+    margin-bottom: 15px; 
+  
+    label {
+        font-weight: bold;
+        margin-bottom: 5px; 
+    }
+  
+    input {
+        width: 90%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 16px;
+        background: #1e151c;
+        color: orange;
+    }
+  
+    div {
+        color: red;
+        font-size: 14px;
+        margin-top: 5px; // Space between input and validation message
+    }
+  }
+  
+  .mat-card-content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  .custom-save {
+    background-color: #28a745 !important; /* Green */
+    margin-right:10px;
+    color: white !important;
+  }
+  
+  .custom-cancel {
+    background-color: #dc3545 !important; /* Red */
+    color: white !important;
+  }
+  

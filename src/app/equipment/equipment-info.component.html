@@ -1,1 +1,162 @@
-<p>equipment-info works!</p>
+<h1>{{title}}</h1>
+<div class="flip-card" [class.flipped] = "isEditMode">
+<div class="flip-card-inner">
+        <!-- Front Side (View Mode) -->
+    <mat-card *ngIf="equipment" class="flip-card-front item-card" [class.hidden]="isEditMode" 
+    (mousemove)="onMouseMove($event)" (mouseleave)="onMouseLeave()">
+    <mat-card-title class="card-title">{{ equipment.name }}</mat-card-title>
+    <mat-card-content class="card-content">
+        <div class="item-info">
+          <p><strong>Max HP:</strong> {{ equipment.max_Hp }}</p>
+          <p><strong>Max SP:</strong> {{ equipment.max_SP }}</p>
+          <p><strong>Physical Attack:</strong> {{ equipment.physical_Atk }}</p>
+          <p><strong>Elemental Attack:</strong> {{ equipment.elemental_Atk }}</p>
+          <p><strong>Physical Defense:</strong> {{ equipment.physical_Def }}</p>
+          <p><strong>Elemental Defense:</strong> {{ equipment.elemental_Def }}</p>
+          <p><strong>Accuracy:</strong> {{ equipment.accuracy }}</p>
+          <p><strong>Speed:</strong> {{ equipment.speed }}</p>
+          <p><strong>Critical:</strong> {{ equipment.critical }}</p>
+          <p><strong>Evasion:</strong> {{ equipment.evasion }}</p>
+          <p><strong>Effect:</strong> {{ equipment.effect }}</p>
+          <p><strong>Buy Price:</strong> {{ equipment.buy_Price }} Leaf</p>
+          <p><strong>Sell Price:</strong> {{ equipment.sell_Price }} Leaf</p>
+          <p><strong>Equipment Type:</strong> {{ equipment.equipment_Type }}</p>
+        </div>
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <button mat-button color="primary" (click)="toggleEditMode()">Edit</button>
+      </mat-card-actions>
+    </mat-card>
+    <form  [formGroup]="form" class="flip-card-back item-card" [class.hidden]="!isEditMode">
+        <mat-card-title class="card-title">Edit Item</mat-card-title>
+        <mat-card-content class="card-content">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input id="name" formControlName="name" class="form-control" readonly>
+          </div>
+          <div class="form-group">
+            <label for="max_Hp">Max HP</label>
+            <input id="max_Hp" formControlName="max_Hp" class="form-control">
+            <div *ngIf="form.controls['max_Hp'].touched && form.controls['max_Hp'].invalid">
+              <div *ngIf="form.controls['max_Hp'].errors?.['required']">Max Hp is required.</div>
+              <div *ngIf="form.controls['max_Hp'].errors?.['pattern']">Description must contain at least 2 alphanumeric characters.</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="max_SP">Max SP</label>
+            <input id="max_SP" formControlName="max_SP" class="form-control">
+            <div *ngIf="form.controls['max_SP'].touched && form.controls['max_SP'].invalid">
+              <div *ngIf="form.controls['max_SP'].errors?.['required']">Max SP is required.</div>
+              <div *ngIf="form.controls['max_SP'].errors?.['pattern']">Description must contain at least 2 alphanumeric characters.</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="physical_Atk">Physical Attack</label>
+            <input id="physical_Atk" formControlName="physical_Atk" class="form-control">
+            <div *ngIf="form.controls['physical_Atk'].touched && form.controls['physical_Atk'].invalid">
+              <div *ngIf="form.controls['physical_Atk'].errors?.['required']">Physical Attack is required.</div>
+              <div *ngIf="form.controls['physical_Atk'].errors?.['pattern']">Description must contain at least 2 alphanumeric characters.</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="elemental_Atk">Elemental Attack</label>
+            <input id="elemental_Atk" formControlName="elemental_Atk" class="form-control">
+            <div *ngIf="form.controls['elemental_Atk'].touched && form.controls['elemental_Atk'].invalid">
+              <div *ngIf="form.controls['elemental_Atk'].errors?.['required']">Elemental Attack is required.</div>
+              <div *ngIf="form.controls['elemental_Atk'].errors?.['pattern']">Description must contain at least 2 alphanumeric characters.</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="physical_Def">Physical Defense</label>
+            <input id="physical_Def" formControlName="physical_Def" class="form-control">
+            <div *ngIf="form.controls['physical_Def'].touched && form.controls['physical_Def'].invalid">
+              <div *ngIf="form.controls['physical_Def'].errors?.['required']">Physical Defense is required.</div>
+              <div *ngIf="form.controls['physical_Def'].errors?.['pattern']">Description must contain at least 2 alphanumeric characters.</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="elemental_Def">Elemental Defense</label>
+            <input id="elemental_Def" formControlName="elemental_Def" class="form-control">
+            <div *ngIf="form.controls['elemental_Def'].touched && form.controls['elemental_Def'].invalid">
+              <div *ngIf="form.controls['elemental_Def'].errors?.['required']">Elemental Defense is required.</div>
+              <div *ngIf="form.controls['elemental_Def'].errors?.['pattern']">Description must contain at least 2 alphanumeric characters.</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="accuracy">Accuracy</label>
+            <input id="accuracy" formControlName="accuracy" class="form-control">
+            <div *ngIf="form.controls['accuracy'].touched && form.controls['accuracy'].invalid">
+              <div *ngIf="form.controls['accuracy'].errors?.['required']">Accuracy is required.</div>
+              <div *ngIf="form.controls['accuracy'].errors?.['pattern']">Description must contain at least 2 alphanumeric characters.</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="speed">Speed</label>
+            <input id="speed" formControlName="speed" class="form-control">
+            <div *ngIf="form.controls['speed'].touched && form.controls['speed'].invalid">
+              <div *ngIf="form.controls['speed'].errors?.['required']">speed is required.</div>
+              <div *ngIf="form.controls['speed'].errors?.['pattern']">Description must contain at least 2 alphanumeric characters.</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="critical">Critical Damage</label>
+            <input id="critical" formControlName="critical" class="form-control">
+            <div *ngIf="form.controls['critical'].touched && form.controls['critical'].invalid">
+              <div *ngIf="form.controls['critical'].errors?.['required']">Critical Damage is required.</div>
+              <div *ngIf="form.controls['critical'].errors?.['pattern']">Description must contain at least 2 alphanumeric characters.</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="evasion">Evasion</label>
+            <input id="evasion" formControlName="evasion" class="form-control">
+            <div *ngIf="form.controls['evasion'].touched && form.controls['evasion'].invalid">
+              <div *ngIf="form.controls['evasion'].errors?.['required']">Evasion is required.</div>
+              <div *ngIf="form.controls['evasion'].errors?.['pattern']">Description must contain at least 2 alphanumeric characters.</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="effect">Effect</label>
+            <input id="effect" formControlName="effect" class="form-control">
+            <div *ngIf="form.controls['effect'].touched && form.controls['effect'].invalid">
+              <div *ngIf="form.controls['effect'].errors?.['required']">Effect is required.</div>
+              <div *ngIf="form.controls['effect'].errors?.['pattern']">Description must contain at least 1 alphanumeric characters.</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="buy_Price">Buy Price</label>
+            <input id="buy_Price" formControlName="buy_Price" class="form-control">
+            <div *ngIf="form.controls['buy_Price'].touched && form.controls['buy_Price'].invalid">
+              <div *ngIf="form.controls['buy_Price'].errors?.['required']">Buy Price is required.</div>
+              <div *ngIf="form.controls['buy_Price'].errors?.['pattern']">Description must contain at least 2 alphanumeric characters.</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="sell_Price">Sell Price</label>
+            <input id="sell_Price" formControlName="sell_Price" class="form-control">
+            <div *ngIf="form.controls['sell_Price'].touched && form.controls['sell_Price'].invalid">
+              <div *ngIf="form.controls['sell_Price'].errors?.['required']">Sell Price is required.</div>
+              <div *ngIf="form.controls['sell_Price'].errors?.['pattern']">Description must contain at least 2 alphanumeric characters.</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="equipment_Type">Equipment Type</label>
+            <input id="equipment_Type" formControlName="equipment_Type" class="form-control">
+            <div *ngIf="form.controls['equipment_Type'].touched && form.controls['equipment_Type'].invalid">
+              <div *ngIf="form.controls['equipment_Type'].errors?.['required']">Equipment Type is required.</div>
+              <div *ngIf="form.controls['equipment_Type'].errors?.['pattern']">Description must contain at least 2 alphanumeric characters.</div>
+            </div>
+          </div>
+        </mat-card-content>
+        <mat-card-actions align="end">
+          <button mat-raised-button class="custom-save" (click)="onSubmit()" [disabled]="form.invalid">
+            Save Changes
+          </button>
+          <button mat-raised-button class="custom-cancel" (click)="toggleEditMode()">
+            Cancel
+          </button>
+          
+        </mat-card-actions>
+    </form>
+
+</div>
+</div>
