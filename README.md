@@ -1,6 +1,21 @@
 # Octopath II Item App
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.1.4.
+# Table of Contents
+
+1. [Overview](#overview)
+2. [Packages](#packages)
+3. [ApiResult Interface](#apiresult-interface)
+4. [QueryParams](#queryparams)
+5. [Base Service](#base-service)
+6. [Base Form Component](#base-form-component)
+7. [Item](#item)
+8. [Item Service](#item-service)
+9. [ItemsComponent](#itemscomponent)
+10. [Item Info Component](#item-info-component)
+11. [Equipment](#equipment)
+12. [Conclusion](#conclusion)
+
 
 # Overview 
 This part of the project is the front-end of the main project "Octopath II Items". The back-end is completed with using .NET 8 and the repository of the project is in  `OctopathII_Items-API`. Both project must be used in order for the project to work, so please ensure you have both of them! or create your own API for this project.
